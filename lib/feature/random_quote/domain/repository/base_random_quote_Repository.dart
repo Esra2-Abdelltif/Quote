@@ -4,6 +4,7 @@ import 'package:qoutes/feature/random_quote/domain/entities/quotes.dart';
 import '../../../../core/error/failure.dart';
 
 abstract class BaseRandomQuoteRepository{
+
   Future<Either<Failure,Quote>> getRandomQuote();
 
 

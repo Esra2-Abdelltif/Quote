@@ -6,6 +6,7 @@ import '../../../../core/useCases/base_useCase.dart';
 import '../repository/base_random_quote_Repository.dart';
 
 class GetRandomQuotesUseCases implements BaseUseCases<Quote,NoParameters>{
+  //take refrance from absrect class
   final BaseRandomQuoteRepository baseRandomQuoteRepository ;
   GetRandomQuotesUseCases({required this.baseRandomQuoteRepository});
 
