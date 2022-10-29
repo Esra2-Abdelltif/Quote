@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qoutes/core/utils/app_strings.dart';
 import 'package:qoutes/feature/random_quote/presentaion/cubit/randomquotes_cubit.dart';
 import 'package:qoutes/feature/random_quote/presentaion/screens/quote_screen.dart';
-import 'package:qoutes/feature/splash_screen/presentation/pages/splash.dart';
+import 'package:qoutes/feature/splash_screen/presentation/screens/splash.dart';
 import 'package:qoutes/injection_container.dart';
 
 class Routes {

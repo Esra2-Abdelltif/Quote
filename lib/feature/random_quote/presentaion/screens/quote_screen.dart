@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:qoutes/config/locale/app_localizations.dart';
 import 'package:qoutes/core/utils/app_colors.dart';
 import 'package:qoutes/core/utils/app_strings.dart';
 import 'package:qoutes/feature/random_quote/presentaion/cubit/randomquotes_cubit.dart';
 import 'package:qoutes/feature/random_quote/presentaion/widgets/quotes_content.dart';
 import 'package:qoutes/core/widgets/error_widget.dart' as error_widget;
+import 'package:qoutes/feature/splash_screen/presentation/cubit/locale_cubit.dart';
 
 class QuoteScreen extends StatefulWidget {
   const QuoteScreen({Key? key}) : super(key: key);
@@ -77,14 +79,14 @@ class _QuoteScreenState extends State<QuoteScreen> {
           color: AppColors.primaryColor,
         ),
         onPressed: () {
-          // if (AppLocalizations.of(context)!.isEnLocale) {
-          //   BlocProvider.of<LocaleCubit>(context).toArabic();
-          // } else {
-          //   BlocProvider.of<LocaleCubit>(context).toEnglish();
-          // }
+          if (AppLocalizations.of(context)!.isEnLocale) {
+            BlocProvider.of<LocaleCubit>(context).toArabic();
+          } else {
+            BlocProvider.of<LocaleCubit>(context).toEnglish();
+          }
         },
       ),
-      title: Text(AppStrings.appTitle),
+      title: Text(AppLocalizations.of(context)!.translate('app_name')!),
     );
     return RefreshIndicator(
         child: Scaffold(appBar: appBar, body: _buildBodyContent()),

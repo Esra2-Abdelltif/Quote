@@ -19,23 +19,23 @@ import '../datasource/random_quote_remote_datasource.dart';
     if (await networkInfo.isConnected) {
       try {
         final remoteRandomQuote = await randomQuoteRemoteDataSource.getRandomQuote();
-        //randomQuoteLocalDataSource.cacheQuote(remoteRandomQuote);
+        randomQuoteLocalDataSource.cacheQuote(remoteRandomQuote);
         return Right(remoteRandomQuote);
       } on ServerException {
         return Left(ServerFailure());
       }
-    } else {
+    }
+    else {
       try {
-        final casheRandomQuote =
-            await randomQuoteLocalDataSource.getLastRandomQuote();
-        //randomQuoteLocalDataSource.cacheQuote(remoteRandomQuote);
+        final casheRandomQuote = await randomQuoteLocalDataSource.getLastRandomQuote();
+        randomQuoteLocalDataSource.cacheQuote(casheRandomQuote);
         return Right(casheRandomQuote);
       } on CacheException {
         return Left(CacheFailure());
       }
     }
   }
-//}
+
 }
 
 // if( is connected)
