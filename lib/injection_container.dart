@@ -12,10 +12,17 @@ import 'package:qoutes/feature/random_quote/data/repository/random_quote_Reposit
 import 'package:qoutes/feature/random_quote/domain/repository/base_random_quote_Repository.dart';
 import 'package:qoutes/feature/random_quote/domain/usescases/get_random_quotes_usecases.dart';
 import 'package:qoutes/feature/random_quote/presentaion/cubit/randomquotes_cubit.dart';
+import 'package:qoutes/feature/splash_screen/data/data_sources/lang_local_data_source.dart';
+import 'package:qoutes/feature/splash_screen/data/repositories/lang_repository_impl.dart';
+import 'package:qoutes/feature/splash_screen/domain/repositories/lang_repository.dart';
+import 'package:qoutes/feature/splash_screen/domain/use_cases/get_saved_lang.dart';
+import 'package:qoutes/feature/splash_screen/presentation/cubit/locale_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'feature/random_quote/data/datasource/random_quote_local_datasource.dart';
 import 'package:http/http.dart' as http;
+
+import 'feature/splash_screen/domain/use_cases/change_lang.dart';
 
 GetIt getIt = GetIt.instance;
 class ServicesLocater {
@@ -24,17 +31,29 @@ class ServicesLocater {
 
     // Blocs
     getIt.registerFactory<RandomQuoteCubit>(() => RandomQuoteCubit(getRandomQuotesUseCases:  getIt()));
+    getIt.registerFactory<LocaleCubit>(() => LocaleCubit(getSavedLangUseCase: getIt(), changeLangUseCase: getIt()));
+
 
     // Use cases
     getIt.registerLazySingleton<GetRandomQuotesUseCases>(() => GetRandomQuotesUseCases(baseRandomQuoteRepository: getIt()));
+    getIt.registerLazySingleton<GetSavedLangUseCase>(() => GetSavedLangUseCase(langRepository: getIt()));
+    getIt.registerLazySingleton<ChangeLangUseCase>(() => ChangeLangUseCase(langRepository: getIt()));
+
+
     // Repository
     getIt.registerLazySingleton<BaseRandomQuoteRepository>(() => RandomQuoteRepositoryImple(
         networkInfo: getIt(),
         randomQuoteRemoteDataSource: getIt(),
         randomQuoteLocalDataSource: getIt()));
+    getIt.registerLazySingleton<BaseLangRepository>(() => LangRepositoryImpl(langLocalDataSource: getIt()));
+
+
+
     // Data Sources
     getIt.registerLazySingleton<RandomQuoteLocalDataSource>(() => RandomQuoteLocalDataSourceImpl(sharedPreferences: getIt()));
     getIt.registerLazySingleton<RandomQuoteRemoteDataSource>(() => RandomQuoteRemoteDataSourceImpl(apiConsumer: getIt()));
+    getIt.registerLazySingleton<LangLocalDataSource>(() => LangLocalDataSourceImpl(sharedPreferences: getIt()));
+
 
     ///!core
     getIt.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(connectionChecker: getIt()));
